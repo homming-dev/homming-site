@@ -244,6 +244,8 @@
     color: var(--ink-500);
   }
   .foot-right{text-align: right;}
+  .pilot-link{color: var(--ink-700); text-decoration: none; border-bottom: 1px solid var(--ink-300); padding-bottom: 2px; letter-spacing: 0.08em;}
+  .pilot-link:hover, .pilot-link:focus-visible{color: var(--ink-900); border-color: var(--ink-900);}
   .contact{
     display:inline-flex; align-items:center; gap: 8px;
     color: var(--ink-900);
@@ -344,7 +346,7 @@
     </main>
 
     <footer class="foot">
-      <div class="foot-left"></div>
+      <div class="foot-left"><a class="pilot-link" href="/pilot" data-event="pilot_open">호두 시험 참여 &rarr;</a></div>
       <div class="foot-center">
         <a class="contact" href="mailto:" data-user="hello" data-domain="homm.ing" title="Click to copy · Option-click to open your mail app" aria-label="Copy the homming contact address to clipboard" data-event="contact_copy"><span class="mail"><span class="m-local">&#104;&#101;&#108;&#108;&#111;</span><span class="m-at">&#64;</span><span class="m-domain">&#104;&#111;&#109;&#109;&#46;&#105;&#110;&#103;</span></span> <span class="arrow">→</span></a>
       </div>
