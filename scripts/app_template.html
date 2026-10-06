@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>우리 가족 공간 · 호밍 (미리보기)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Preview of the Homming family space: a code from KakaoTalk instead of a password, what you share and with whom, the family letter.">
+{{HEAD_LINKS}}
+<style>
+  :root{
+    --cream:#FFF4E0; --butter:#FFE9A8; --sun:#FFD460; --amber:#FFB86B; --coral:#FFA17F; --blush:#F58A79; --ember:#E86A6A;
+    --ink-900:#1A1614; --ink-700:#3B322D; --ink-500:#6B5F58; --ink-300:#B8ADA5; --paper:#FBF7F1;
+    --line:rgba(26,22,20,.10); --card:rgba(255,255,255,.64);
+    --ok:#2F6B4C; --okbg:#E3F0E7; --warn:#9A4A1C; --warnbg:#FBE5D4;
+    --serif:"Fraunces","Nanum Myeongjo","Iowan Old Style",Georgia,serif;
+    --serif-ko:"Nanum Myeongjo","Fraunces",Georgia,serif;
+    --sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{font-size:16px;-webkit-text-size-adjust:100%}
+  html.big{font-size:19px}
+  body{margin:0;font-family:var(--sans);color:var(--ink-900);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+    radial-gradient(60vmax 48vmax at 0% 0%, rgba(255,212,96,.34), transparent 62%),
+    radial-gradient(52vmax 40vmax at 100% 6%, rgba(255,161,127,.22), transparent 62%), var(--paper)}
+  button{font-family:inherit}
+  .preview{position:sticky;top:0;z-index:40;background:var(--ink-900);color:var(--cream);font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;line-height:1.4;padding:9px 16px;text-align:center}
+  .preview .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sun);margin-right:8px;vertical-align:middle}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink-900);text-decoration:none}
+  .brand svg{width:26px;height:26px;flex:none}
+  .brand .word{font-weight:600;font-size:1.05rem;letter-spacing:-.01em}
+  .lang{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-size:.72rem}
+  .lang button{appearance:none;border:0;background:transparent;color:var(--ink-500);padding:7px 9px;border-radius:999px;cursor:pointer;font:inherit;min-height:32px}
+  .lang button[aria-pressed="true"]{background:rgba(255,255,255,.85);color:var(--ink-900)}
+  .btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(26,22,20,.16);background:rgba(255,255,255,.78);color:var(--ink-900);font:600 .9rem/1.1 var(--sans);cursor:pointer;text-decoration:none;text-align:center}
+  .btn:hover{background:#fff}
+  .btn.primary{background:var(--ink-900);color:var(--cream);border-color:var(--ink-900)}
+  .btn.primary:hover{background:var(--ink-700)}
+  .btn.kakao{background:#FEE500;color:#191919;border-color:rgba(26,22,20,.12)}
+  .btn.quiet{background:transparent;border-color:transparent}
+  .btn.small{min-height:36px;padding:0 13px;font-size:.82rem}
+  .btn.wide{width:100%}
+  :is(.btn,.lang button,.seg button,.nav button,.bottomnav button,.filters button,.demo button):focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-500)}
+  h1,h2{margin:0;font-family:var(--serif);font-weight:400;letter-spacing:-.02em}
+  html[lang="ko"] h1, html[lang="ko"] h2, html[lang="ko"] .letter p{font-family:var(--serif-ko);letter-spacing:-.01em}
+  h1{font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.2}
+  h2{font-size:1.3rem;line-height:1.3}
+  h3{margin:0;font-size:1rem;font-weight:600}
+  p{margin:0}
+  .lede{color:var(--ink-700);font-size:1.02rem;line-height:1.65;margin-top:10px;max-width:640px}
+  .muted{color:var(--ink-500)} .small{font-size:.86rem;line-height:1.55}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;line-height:1;padding:6px 10px;border-radius:999px;background:rgba(26,22,20,.06);color:var(--ink-700);white-space:nowrap}
+  .chip.ok{background:var(--okbg);color:var(--ok)} .chip.warn{background:var(--warnbg);color:var(--warn)}
+  .chip.soon{background:rgba(255,212,96,.42);color:var(--ink-700)} .chip.fixed{background:rgba(26,22,20,.08)}
+  .chip.lvl-content{background:#ECE4F7;color:#55397F} .chip.lvl-action{background:rgba(255,184,107,.32);color:#74440E}
+
+  /* entry */
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px clamp(16px,4vw,40px)}
+  .entry{display:grid;place-items:center;padding:20px 16px 64px}
+  .entrycard{width:min(460px,100%);padding:32px 28px}
+  .entrycard h1{margin-top:12px}
+  .codeform{margin-top:24px;display:grid;gap:12px}
+  .label{font-weight:600;font-size:.92rem}
+  .codeinput{width:100%;height:68px;border-radius:16px;border:1.5px solid rgba(26,22,20,.22);background:#fff;color:var(--ink-900);font:600 1.9rem/1 var(--mono);letter-spacing:.4em;text-align:center;padding:0 0 0 .4em}
+  .codeinput:focus{outline:3px solid var(--sun);border-color:var(--ink-700)}
+  .codeinput::placeholder{color:var(--ink-300)}
+  .err{color:#B3261E;font-size:.9rem;line-height:1.5}
+  .help{color:var(--ink-500);font-size:.86rem;line-height:1.6;margin-top:14px}
+  .demo{margin-top:20px;padding-top:18px;border-top:1px dashed rgba(26,22,20,.2);display:grid;gap:8px}
+  .demo .eyebrow{margin-bottom:2px}
+  .demo button{appearance:none;display:flex;align-items:center;gap:10px;border:1px dashed rgba(26,22,20,.3);background:rgba(255,255,255,.4);border-radius:12px;padding:10px 12px;text-align:left;cursor:pointer;font:500 .88rem var(--sans);color:var(--ink-700);min-height:44px}
+  .demo button b{font-family:var(--mono);font-weight:600;color:var(--ink-900)}
+  .fineprint{color:var(--ink-500);font-size:.82rem;text-align:center;margin-top:16px;max-width:460px;line-height:1.5}
+
+  /* app shell */
+  .app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:calc(100vh - 34px)}
+  .side{position:sticky;top:34px;height:calc(100vh - 34px);display:flex;flex-direction:column;gap:24px;padding:22px 14px;border-right:1px solid var(--line);background:rgba(251,247,241,.55)}
+  .nav{display:grid;gap:4px}
+  .nav button{appearance:none;border:0;background:transparent;display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;font:500 .94rem/1.2 var(--sans);color:var(--ink-700);cursor:pointer;text-align:left;min-height:44px}
+  .nav button:hover{background:rgba(255,255,255,.6)}
+  .nav button[aria-current="page"]{background:#fff;color:var(--ink-900);box-shadow:0 1px 2px rgba(26,22,20,.08)}
+  .nav svg,.bottomnav svg{width:19px;height:19px;flex:none}
+  .who{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.6)}
+  .who strong{display:block;font-size:.92rem}
+  .avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--butter);color:var(--ink-900);flex:none}
+  .avatar.other{background:#F6D3C8}
+  .avatar.ghost{background:transparent;border:1.5px dashed rgba(26,22,20,.32);color:var(--ink-500)}
+  .shell{min-width:0}
+  .appbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px clamp(16px,3vw,36px);border-bottom:1px solid var(--line)}
+  .crumb{font-size:.86rem;color:var(--ink-500)} .crumb strong{color:var(--ink-900);font-weight:600}
+  .mobile-brand{display:none}
+  .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .pill{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;padding:7px 10px;border-radius:999px;background:rgba(255,212,96,.45);white-space:nowrap}
+  .main{padding:28px clamp(16px,3vw,36px) 64px;max-width:1080px}
+  .main:focus{outline:none}
+  .hero{margin-bottom:22px}
+  .hero h1{margin-top:8px}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .quote{font-size:1rem;line-height:1.65;color:var(--ink-900)}
+  .cardfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+  /* pair */
+  .pairrow{display:grid;grid-template-columns:1fr minmax(70px,160px) 1fr;align-items:center;gap:10px;padding:6px 0}
+  .person{display:grid;justify-items:center;gap:6px;text-align:center}
+  .person .avatar{width:64px;height:64px;font-size:1.3rem}
+  .person strong{font-size:1rem}
+  .link{display:grid;justify-items:center;gap:8px}
+  .link .bar{width:100%;height:2px;background:var(--ok);border-radius:2px}
+  .link.dashed .bar{height:0;background:none;border-top:2px dashed rgba(26,22,20,.25)}
+  .pairnote{margin-top:14px;text-align:center}
+  .minigraph{display:flex;align-items:center;gap:6px;margin-top:14px}
+  .minigraph .avatar{width:30px;height:30px;font-size:.78rem}
+  .minigraph .seg-line{width:34px;height:2px;background:var(--ok)}
+  .minigraph .seg-line.dashed{height:0;background:none;border-top:2px dashed rgba(26,22,20,.25)}
+
+  /* sharing */
+  .topic{display:grid;grid-template-columns:minmax(160px,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+  .topic:first-child{padding-top:4px} .topic:last-child{border-bottom:0;padding-bottom:4px}
+  .topic strong{display:block;font-size:1rem;margin-bottom:4px}
+  .seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:rgba(26,22,20,.05);border-radius:14px;padding:4px}
+  .seg button{appearance:none;border:0;background:transparent;padding:9px 12px;min-height:40px;border-radius:10px;font:500 .85rem/1.1 var(--sans);color:var(--ink-700);cursor:pointer}
+  .seg button[aria-checked="true"]{background:#fff;color:var(--ink-900);font-weight:700;box-shadow:0 1px 3px rgba(26,22,20,.14)}
+  .note{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;line-height:1.6;color:var(--ink-700);background:rgba(255,255,255,.5);border:1px dashed rgba(26,22,20,.18);border-radius:16px;padding:14px 16px;margin-top:14px}
+  .note svg{width:18px;height:18px;flex:none;margin-top:2px}
+
+  /* history */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .filters button{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.65);border-radius:999px;padding:8px 15px;min-height:40px;font:500 .88rem var(--sans);cursor:pointer;color:var(--ink-700)}
+  .filters button[aria-pressed="true"]{background:var(--ink-900);color:var(--cream);border-color:var(--ink-900)}
+  .timeline{position:relative;display:grid;gap:14px;padding-left:24px}
+  .timeline::before{content:"";position:absolute;left:7px;top:10px;bottom:10px;width:2px;background:rgba(26,22,20,.1)}
+  .titem{position:relative}
+  .titem::before{content:"";position:absolute;left:-23px;top:24px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--amber)}
+  .titem.in::before{border-color:var(--blush)} .titem.hodu::before{border-color:var(--sun);background:var(--sun)}
+  .tmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--ink-500);margin-bottom:8px}
+  .tmeta strong{color:var(--ink-900);font-weight:600}
+  .kv{display:grid;gap:4px;margin-top:10px}
+  .kv .k{font-size:.76rem;color:var(--ink-500);font-weight:600}
+
+  /* letter */
+  .lettergrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;align-items:start}
+  .letter{position:relative;background:#FFFDF8;border:1px solid rgba(26,22,20,.12);border-radius:8px;padding:36px 34px 28px;box-shadow:0 22px 44px -28px rgba(58,45,35,.5)}
+  .letter::after{content:"";position:absolute;inset:10px;border:1px solid rgba(232,106,106,.18);border-radius:4px;pointer-events:none}
+  .letter h2{font-size:1.65rem;margin:10px 0 2px}
+  .letter p{font-family:var(--serif);font-size:1.06rem;line-height:1.9;color:var(--ink-700);margin-top:14px}
+  .letter .sign{text-align:right;font-style:italic;color:var(--ink-500);font-size:.95rem;margin-top:22px}
+  .stamp{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);border:1.5px solid var(--ember);border-radius:6px;padding:5px 7px;transform:rotate(4deg);opacity:.75}
+  .stack{display:grid;gap:14px}
+  .approvals{list-style:none;margin:12px 0 16px;padding:0;display:grid;gap:10px;font-size:.92rem;line-height:1.4}
+  .approvals li{display:flex;gap:10px;align-items:center}
+  .btnstack{display:grid;gap:8px}
+
+  /* services */
+  .svc .sicon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:.95rem}
+  .svc h2{font-size:1.12rem;margin-top:16px}
+  html[lang="ko"] .svc h2{font-family:var(--sans);font-weight:600}
+  .svc p{font-size:.88rem;line-height:1.6;color:var(--ink-700);margin:8px 0 16px}
+  .svc .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+
+  .empty{text-align:center;padding:38px 22px}
+  .empty p{color:var(--ink-700);line-height:1.65;margin:10px auto 18px;max-width:420px}
+
+  /* dialog and toast */
+  dialog.dlg{border:0;border-radius:22px;padding:0;width:min(480px,calc(100vw - 32px));background:var(--paper);color:var(--ink-900);box-shadow:0 30px 80px -30px rgba(26,22,20,.6)}
+  dialog.dlg::backdrop{background:rgba(26,22,20,.38)}
+  .dlgbody{padding:26px 24px;display:grid;gap:16px}
+  .dlgbody p{color:var(--ink-700);line-height:1.6}
+  fieldset{border:0;margin:0;padding:0;display:flex;gap:10px;flex-wrap:wrap}
+  legend{font-weight:600;font-size:.92rem;margin-bottom:8px;padding:0}
+  .radio{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;min-height:44px;font-size:.95rem}
+  .linkbox{display:flex;gap:8px;align-items:center}
+  .linkbox input{flex:1;min-width:0;height:46px;border-radius:12px;border:1px solid var(--line);padding:0 12px;font:500 .92rem var(--mono);background:#fff;color:var(--ink-500)}
+  .dlgactions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink-900);color:var(--cream);padding:12px 18px;border-radius:16px;font-size:.88rem;line-height:1.45;z-index:60;width:max-content;max-width:calc(100vw - 32px);text-align:center;box-shadow:0 12px 30px -12px rgba(26,22,20,.5)}
+
+  .bottomnav{display:none}
+  @media (max-width: 860px){
+    .app{grid-template-columns:1fr}
+    .side{display:none}
+    .mobile-brand{display:flex}
+    .crumb{display:none}
+    .bottomnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(251,247,241,.97);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+    .bottomnav button{appearance:none;border:0;background:transparent;display:grid;justify-items:center;gap:4px;font:500 .68rem/1.1 var(--sans);color:var(--ink-500);padding:6px 2px;min-height:52px;cursor:pointer}
+    .bottomnav button[aria-current="page"]{color:var(--ink-900);font-weight:700}
+    .main{padding-bottom:120px}
+    .toast{bottom:92px}
+    .grid2,.grid3,.lettergrid{grid-template-columns:1fr}
+    .topic{grid-template-columns:1fr;gap:10px}
+  }
+  @media (max-width: 520px){
+    .pill{display:none}
+    .letter{padding:28px 20px 22px}
+    .stamp{top:16px;right:14px}
+    .entrycard{padding:26px 20px}
+    .person .avatar{width:54px;height:54px}
+    .seg button{padding:9px 10px}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<dialog id="dlg" class="dlg" aria-labelledby="dlgTitle"></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<noscript><p style="padding:24px">이 미리보기는 JavaScript가 켜져 있어야 보여요. / This preview needs JavaScript.</p></noscript>
+
+<script>
+'use strict';
+(function () {
+  var BRAND = '{{BRAND_SVG}}';
+  var ICON = {
+    home: 'M3 10.5 12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5',
+    shield: 'M12 3 4 6.5V12c0 4.4 3.4 8 8 9 4.6-1 8-4.6 8-9V6.5L12 3Z',
+    story: 'M4 5h12v9H8.5L4 17.5V5ZM16 9h4v9.5L16.5 16H10v-2',
+    letter: 'M3 6h18v12H3zM3.5 6.5 12 13l8.5-6.5',
+    link: 'M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.5 1.5M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.5-1.5',
+    lock: 'M6 11h12v10H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3',
+    info: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 11v5M12 7.5v.5'
+  };
+  function icon(name) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + ICON[name] + '"/></svg>';
+  }
+
+  var STR = {
+    ko: {
+      'doc.title': '우리 가족 공간 · 호밍 (미리보기)',
+      'banner': '준비 중인 화면이에요. 이름과 기록은 모두 예시이고, 실제 계정과 연결되지 않아요.',
+      'code.eyebrow': '우리 가족 공간',
+      'code.title': '카카오톡에서 받은 코드를 넣어 주세요',
+      'code.lede': '비밀번호는 없어요. 6자리 코드 하나면 돼요. 내 카카오톡이 열쇠예요.',
+      'code.label': '6자리 코드',
+      'code.enter': '들어가기',
+      'code.err': '코드가 맞지 않거나 시간이 지났어요. 카카오톡에서 새 코드를 받아 주세요.',
+      'code.help': '카카오톡 호두 채널에서 "웹으로 보기"를 누르면 코드가 와요. 10분 동안 한 번만 쓸 수 있어요.',
+      'code.demo': '미리보기 코드',
+      'code.demo.paired': '자녀, 엄마와 연결됨',
+      'code.demo.solo': '부모, 아직 혼자',
+      'code.fine': '한 번 들어오면 이 기기에서는 한동안 코드를 다시 묻지 않아요.',
+      'app.space': '우리 가족 공간',
+      'top.pill': '준비 중 · 미리보기',
+      'top.big': '글씨 크게', 'top.normal': '기본 글씨', 'top.exit': '나가기',
+      'nav.home': '우리 가족', 'nav.sharing': '내 공유 설정', 'nav.history': '함께한 이야기', 'nav.letter': '패밀리 레터', 'nav.connections': '연결된 서비스',
+      'navs.home': '가족', 'navs.sharing': '공유', 'navs.history': '이야기', 'navs.letter': '편지', 'navs.connections': '연결',
+      'home.eyebrow': '우리 가족',
+      'home.hello': '{name}님, 안녕하세요.',
+      'home.paired': '{other}와 연결돼 있어요. {since}부터 함께하고 있어요.',
+      'home.solo': '호두와는 카카오톡으로 이야기하고 있어요. 자녀를 초대하면 두 분 사이를 호두가 이어 드려요.',
+      'pair.me': '나', 'pair.connected': '연결됨', 'pair.waiting': '초대 전',
+      'pair.empty': '아직 연결된 자녀가 없어요',
+      'pair.invite': '자녀 초대하기',
+      'pair.solo.note': '초대 링크를 카카오톡으로 보내면, 받은 사람이 눌러서 바로 시작해요.',
+      'card.nudge': '이번 주 호두가 건넨 제안',
+      'card.nudge.reacted': '"해 볼게요"를 눌렀어요',
+      'card.nudge.more': '함께한 이야기 보기',
+      'card.letter': '다음 패밀리 레터',
+      'card.letter.when': '10월 31일',
+      'card.letter.body': '10월 31일에 나가요. 보내기 전에 미리 보고, 빼고 싶은 문장을 고를 수 있어요.',
+      'card.letter.cta': '미리 보기',
+      'card.reconnect': '다시 연결이 필요해요',
+      'card.reconnect.body': 'Google 캘린더 연결이 풀렸어요. 다시 연결하면 {other}와 약속을 잡을 때 내 일정을 같이 봐요.',
+      'card.reconnect.cta': '연결된 서비스 보기',
+      'card.graph': '가족 지도',
+      'card.graph.body': '가족이 셋 이상 연결되면, 누가 누구와 무엇을 나누는지 그림으로 보여 드릴게요.',
+      'card.solo.nudge': '자녀가 연결되면 호두가 두 분 사이에서 건네는 제안이 여기에 보여요.',
+      'chip.soon': '준비 중', 'chip.fixed': '정해진 규칙',
+      'sharing.eyebrow': '내 공유 설정',
+      'sharing.title': '무엇을 어디까지 나눌지, 내가 정해요',
+      'sharing.lede': '{other}에게 전할 범위를 주제마다 고르세요. 바꾸면 다음 이야기부터 적용돼요.',
+      'lvl.ask': '매번 물어보기', 'lvl.content': '내용까지', 'lvl.action': '행동만', 'lvl.none': '전하지 않기',
+      'lvlh.ask': '이야기가 나올 때마다 호두가 카카오톡에서 먼저 물어봐요.',
+      'lvlh.content': '내가 한 말의 내용까지 전해요.',
+      'lvlh.action': '내용은 숨기고, 함께하면 좋을 행동만 제안해요.',
+      'lvlh.none': '이 주제는 전하지 않아요.',
+      'topic.mood': '기분', 'topic.routine': '일상', 'topic.activity': '나들이나 활동', 'topic.need': '필요한 것',
+      'topic.preference': '취향', 'topic.boundary': '연락 방식', 'topic.relationship_note': '가족 사이',
+      'topic.health': '건강',
+      'health.body': '건강 이야기는 따로 묻지 않아요. 호두가 먼저 괜찮으신지 살피고, {other}에게는 내용 없이 안부 권유만 가요.',
+      'sharing.note': '이 설정은 나만 바꿀 수 있어요. {other}도 자기 쪽 설정을 따로 정해요.',
+      'sharing.solo': '자녀가 연결되면 무엇을 어디까지 나눌지 여기서 정할 수 있어요.',
+      'hist.eyebrow': '함께한 이야기',
+      'hist.title': '오간 이야기를 한곳에서',
+      'hist.lede': '내가 보낸 것은 내 말 그대로, 받은 것은 {other}가 허락한 만큼만 보여요.',
+      'hist.all': '전체', 'hist.out': '내가 보낸 것', 'hist.in': '받은 것',
+      'hist.from': '{other}에게서', 'hist.to': '{other}에게', 'hist.hodu': '호두의 제안',
+      'hist.said': '내가 한 말', 'hist.went': '{other}에게 간 것', 'hist.asis': '그대로 전해졌어요.',
+      'hist.hidden': '{other}가 내용은 숨겼어요. 호두의 제안만 왔어요.',
+      'hist.solo': '아직 함께한 이야기가 없어요. 자녀가 연결되면 오간 이야기가 여기에 쌓여요.',
+      'letter.eyebrow': '패밀리 레터',
+      'letter.title': '한 달에 한 번, 우리 가족 편지',
+      'letter.lede': '서로 허락한 이야기로 호두가 편지를 엮어요. 보내기 전에 두 사람 모두 미리 보고 승인해요.',
+      'letter.month': '10월의 편지', 'letter.kicker': '우리 가족 편지 · 2026',
+      'letter.who': '{me} · {other} · 미리 보기',
+      'letter.sign': '호두가 엮었어요',
+      'letter.approvals': '보내기 전 승인',
+      'letter.me': '나: 미리 보고 승인해 주세요',
+      'letter.other': '{other}: 승인하셨어요',
+      'letter.approve': '승인하기',
+      'letter.pick': '빼고 싶은 문장 고르기',
+      'letter.rule1': '행동만 허락한 이야기는 편지에도 행동으로만 적혀요.',
+      'letter.rule2': '보낸 편지는 되돌릴 수 없어요. 나중에 허락을 줄이면 다음 편지부터 빠져요.',
+      'letter.past': '지난 편지',
+      'letter.past.sep': '9월의 편지 · 9월 30일에 보냄',
+      'letter.solo': '자녀가 연결되면 첫 편지를 만들어 드려요.',
+      'conn.eyebrow': '연결된 서비스',
+      'conn.title': '필요한 것만 연결해요',
+      'conn.lede': '연결해도 그 내용이 가족에게 저절로 가지는 않아요.',
+      'conn.kakao': '카카오톡 호두 채널', 'conn.kakao.desc': '호두와 이야기하는 곳이에요. 10월 3일에 연결했어요.',
+      'conn.cal': 'Google 캘린더', 'conn.cal.desc': '약속을 잡을 때 내 일정을 봐요. 일정을 넣는 건 매번 확인한 뒤에만 해요.',
+      'conn.gmail': 'Gmail', 'conn.gmail.desc': '연결하지 않아도 호두와 가족 기능은 그대로 쓸 수 있어요.',
+      'st.ok': '연결됨', 'st.expired': '다시 연결 필요', 'st.none': '연결 안 함',
+      'cta.manage': '관리', 'cta.reconnect': '다시 연결하기', 'cta.connect': '연결하기',
+      'inv.title': '자녀 초대하기',
+      'inv.body': '초대 링크를 카카오톡으로 보내면, 받은 사람이 눌러서 호두와 바로 시작해요.',
+      'inv.who': '누구를 초대하나요?', 'inv.daughter': '딸', 'inv.son': '아들',
+      'inv.link': '초대 링크', 'inv.example': '예시',
+      'inv.rules': '한 사람만 쓸 수 있고 7일 동안 열려요. 연결된 뒤에는 무엇을 나눌지 각자 정해요.',
+      'inv.kakao': '카카오톡으로 보내기', 'inv.copy': '링크 복사', 'inv.close': '닫기',
+      'toast.saved': '미리보기라 저장되지는 않아요.',
+      'toast.preview': '미리보기라 실제로 진행되지는 않아요.',
+      'toast.invite': '미리보기라 실제 초대 링크는 만들어지지 않아요.',
+      'toast.connect': '미리보기라 실제 연결은 하지 않아요.',
+      'toast.exit': '이 기기에서만 나갔어요. 카카오톡의 호두는 그대로예요.'
+    },
+    en: {
+      'doc.title': 'Family space · homming (preview)',
+      'banner': 'This screen is still in the works. Every name and record is an example, and nothing is linked to a real account.',
+      'code.eyebrow': 'Family space',
+      'code.title': 'Enter the code from KakaoTalk',
+      'code.lede': 'There is no password, only a six-digit code. Your KakaoTalk is the key.',
+      'code.label': 'Six-digit code',
+      'code.enter': 'Enter',
+      'code.err': 'That code does not match or has expired. Please get a new one in KakaoTalk.',
+      'code.help': 'In the Hodu channel on KakaoTalk, tap "View on the web" and a code arrives. It works once, for ten minutes.',
+      'code.demo': 'Preview codes',
+      'code.demo.paired': 'child, linked with Mom',
+      'code.demo.solo': 'parent, not linked yet',
+      'code.fine': 'Once you are in, this device will not ask for a code again for a while.',
+      'app.space': 'Family space',
+      'top.pill': 'In the works · preview',
+      'top.big': 'Larger text', 'top.normal': 'Normal text', 'top.exit': 'Sign out',
+      'nav.home': 'Our family', 'nav.sharing': 'My sharing', 'nav.history': 'Our story', 'nav.letter': 'Family letter', 'nav.connections': 'Connected services',
+      'navs.home': 'Family', 'navs.sharing': 'Sharing', 'navs.history': 'Story', 'navs.letter': 'Letter', 'navs.connections': 'Services',
+      'home.eyebrow': 'Our family',
+      'home.hello': 'Hello, {name}.',
+      'home.paired': 'You and {other} have been linked since {since}.',
+      'home.solo': 'You talk with Hodu on KakaoTalk. Invite your child, and Hodu will connect the two of you.',
+      'pair.me': 'Me', 'pair.connected': 'Linked', 'pair.waiting': 'Not invited yet',
+      'pair.empty': 'No child linked yet',
+      'pair.invite': 'Invite your child',
+      'pair.solo.note': 'Send the invite link on KakaoTalk. Whoever opens it starts with Hodu right away.',
+      'card.nudge': 'This week\'s suggestion from Hodu',
+      'card.nudge.reacted': 'You tapped "I\'ll try"',
+      'card.nudge.more': 'See our story',
+      'card.letter': 'Next family letter',
+      'card.letter.when': 'Oct 31',
+      'card.letter.body': 'It goes out on October 31. Before it does, you can read it and pick any sentence to leave out.',
+      'card.letter.cta': 'Preview',
+      'card.reconnect': 'Needs reconnecting',
+      'card.reconnect.body': 'Your Google Calendar link has lapsed. Reconnect it, and your schedule is there when you make plans with {other}.',
+      'card.reconnect.cta': 'Connected services',
+      'card.graph': 'Family map',
+      'card.graph.body': 'Once three or more of your family are linked, you will see who shares what with whom.',
+      'card.solo.nudge': 'Once your child is linked, Hodu\'s suggestions for the two of you show up here.',
+      'chip.soon': 'Coming', 'chip.fixed': 'Fixed rule',
+      'sharing.eyebrow': 'My sharing',
+      'sharing.title': 'You decide what is shared, and how much',
+      'sharing.lede': 'Choose, topic by topic, how much reaches {other}. A change applies from the next conversation on.',
+      'lvl.ask': 'Ask each time', 'lvl.content': 'Full details', 'lvl.action': 'Action only', 'lvl.none': 'Don\'t share',
+      'lvlh.ask': 'Each time it comes up, Hodu asks you first on KakaoTalk.',
+      'lvlh.content': 'What you said is passed on in full.',
+      'lvlh.action': 'The details stay private. Only something to do together is suggested.',
+      'lvlh.none': 'Nothing on this topic is passed on.',
+      'topic.mood': 'Mood', 'topic.routine': 'Daily routine', 'topic.activity': 'Outings and activities', 'topic.need': 'Things you need',
+      'topic.preference': 'Likes and dislikes', 'topic.boundary': 'How to reach you', 'topic.relationship_note': 'Family matters',
+      'topic.health': 'Health',
+      'health.body': 'Health talk is never put to a sharing question. Hodu first checks how you are, and {other} only gets a nudge to check in, with no details.',
+      'sharing.note': 'Only you can change these. {other} sets their own side separately.',
+      'sharing.solo': 'Once your child is linked, you choose here what to share and how much.',
+      'hist.eyebrow': 'Our story',
+      'hist.title': 'Everything that went back and forth',
+      'hist.lede': 'What you sent shows in your own words. What you received shows only as much as {other} allowed.',
+      'hist.all': 'All', 'hist.out': 'Sent', 'hist.in': 'Received',
+      'hist.from': 'From {other}', 'hist.to': 'To {other}', 'hist.hodu': 'Hodu\'s suggestion',
+      'hist.said': 'What you said', 'hist.went': 'What reached {other}', 'hist.asis': 'Passed on as it was.',
+      'hist.hidden': '{other} kept the details private. Only Hodu\'s suggestion came through.',
+      'hist.solo': 'Nothing here yet. Once your child is linked, what goes back and forth collects here.',
+      'letter.eyebrow': 'Family letter',
+      'letter.title': 'Once a month, a letter for the family',
+      'letter.lede': 'Hodu puts together a letter from what each of you agreed to share. Both of you read and approve it before it goes out.',
+      'letter.month': 'October letter', 'letter.kicker': 'Family letter · 2026',
+      'letter.who': '{me} · {other} · preview',
+      'letter.sign': 'Put together by Hodu',
+      'letter.approvals': 'Approvals before sending',
+      'letter.me': 'You: please read and approve',
+      'letter.other': '{other}: approved',
+      'letter.approve': 'Approve',
+      'letter.pick': 'Pick sentences to leave out',
+      'letter.rule1': 'A story shared as action only appears in the letter only as an action.',
+      'letter.rule2': 'A sent letter cannot be taken back. If you narrow what you share, it is left out from the next letter on.',
+      'letter.past': 'Past letters',
+      'letter.past.sep': 'September letter · sent September 30',
+      'letter.solo': 'Once your child is linked, we will put together your first letter.',
+      'conn.eyebrow': 'Connected services',
+      'conn.title': 'Connect only what you need',
+      'conn.lede': 'Connecting a service does not send its contents to your family.',
+      'conn.kakao': 'Hodu channel on KakaoTalk', 'conn.kakao.desc': 'Where you talk with Hodu. Linked on October 3.',
+      'conn.cal': 'Google Calendar', 'conn.cal.desc': 'Used to see your schedule when you make plans. Adding an event always waits for your confirmation.',
+      'conn.gmail': 'Gmail', 'conn.gmail.desc': 'Hodu and the family features work without it.',
+      'st.ok': 'Connected', 'st.expired': 'Reconnect needed', 'st.none': 'Not connected',
+      'cta.manage': 'Manage', 'cta.reconnect': 'Reconnect', 'cta.connect': 'Connect',
+      'inv.title': 'Invite your child',
+      'inv.body': 'Send the invite link on KakaoTalk. Whoever opens it starts with Hodu right away.',
+      'inv.who': 'Who are you inviting?', 'inv.daughter': 'Daughter', 'inv.son': 'Son',
+      'inv.link': 'Invite link', 'inv.example': 'Example',
+      'inv.rules': 'One person can use it, and it stays open for seven days. Once linked, each of you decides what to share.',
+      'inv.kakao': 'Send on KakaoTalk', 'inv.copy': 'Copy link', 'inv.close': 'Close',
+      'toast.saved': 'This is a preview, so nothing is saved.',
+      'toast.preview': 'This is a preview, so nothing actually happens.',
+      'toast.invite': 'This is a preview, so no real invite link is made.',
+      'toast.connect': 'This is a preview, so nothing is connected.',
+      'toast.exit': 'Signed out on this device only. Hodu on KakaoTalk carries on.'
+    }
+  };
+
+  var TOPICS = ['mood', 'routine', 'activity', 'need', 'preference', 'boundary', 'relationship_note'];
+  var LEVELS = ['ask', 'content', 'action', 'none'];
+  var NUDGE = {
+    ko: '엄마가 토요일 점심을 일요일로 옮기셨어요. 주말 계획과 겹칠 수 있어요. 일요일 오후에 짧게 통화해 보는 건 어때요?',
+    en: 'Mom moved Saturday lunch to Sunday, which may clash with your weekend plans. How about a short call on Sunday afternoon?'
+  };
+  var PERSONAS = {
+    '123456': {
+      paired: true,
+      name: { ko: '하은', en: 'Haeun' }, initial: { ko: '하', en: 'H' },
+      place: { ko: '자녀 · 미국 서부', en: 'Child · US West' },
+      other: { ko: '엄마', en: 'Mom' }, otherInitial: { ko: '엄', en: 'M' },
+      otherPlace: { ko: '엄마 · 서울', en: 'Mom · Seoul' },
+      since: { ko: '10월 3일', en: 'October 3' },
+      levels: { mood: 'action', routine: 'ask', activity: 'content', need: 'content', preference: 'ask', boundary: 'none', relationship_note: 'ask' },
+      conn: { kakao: 'ok', cal: 'expired', gmail: 'none' }
+    },
+    '246810': {
+      paired: false,
+      name: { ko: '정숙', en: 'Jeongsuk' }, initial: { ko: '정', en: 'J' },
+      place: { ko: '부모 · 서울', en: 'Parent · Seoul' },
+      levels: {},
+      conn: { kakao: 'ok', cal: 'none', gmail: 'none' }
+    }
+  };
+  var HISTORY = [
+    { dir: 'hodu', date: { ko: '10월 3일', en: 'Oct 3' }, text: NUDGE },
+    { dir: 'in', level: 'content', date: { ko: '10월 3일', en: 'Oct 3' }, text: { ko: '토요일 점심 약속, 일요일로 옮겼어.', en: 'I moved Saturday lunch to Sunday.' } },
+    { dir: 'out', level: 'action', date: { ko: '10월 2일', en: 'Oct 2' },
+      said: { ko: '이번 주는 일이 많아서 정신이 없어요.', en: 'Work is swamping me this week.' },
+      sent: { ko: '내용 없이, 짧은 안부 문자를 보내 보자는 제안만 갔어요.', en: 'No details. Only a suggestion to send a short hello.' } },
+    { dir: 'in', level: 'action', date: { ko: '9월 30일', en: 'Sep 30' }, text: { ko: '이번 주에 엄마께 안부 전화 한번 어때요?', en: 'How about giving Mom a call this week?' } },
+    { dir: 'out', level: 'content', date: { ko: '9월 28일', en: 'Sep 28' }, said: { ko: '11월에 한국 들어가요.', en: 'I am coming to Korea in November.' } }
+  ];
+  var LETTER = [
+    { ko: '이번 달 엄마는 토요일 점심 약속을 일요일로 옮기셨고, 하은은 그날 오후에 엄마와 짧게 통화하기로 했어요.',
+      en: 'This month Mom moved Saturday lunch to Sunday, and Haeun set up a short call with her that afternoon.' },
+    { ko: '하은은 11월에 한국에 들어가요. 그때 같이 갈 곳을 하나 정해 두면 좋겠어요.',
+      en: 'Haeun is coming to Korea in November. It would be good to pick one place to go together.' },
+    { ko: '이번 달 호두가 두 분께 건넨 제안은 넷이었고, 그중 셋을 해 보셨어요.',
+      en: 'Hodu offered the two of you four suggestions this month, and you tried three of them.' }
+  ];
+
+  var KEY = 'homming_lang';
+  function storedLang() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function rememberLang(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var lang = (function () {
+    var s = storedLang();
+    if (s === 'ko' || s === 'en') return s;
+    return (navigator.language || '').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en';
+  })();
+  var state = { screen: 'code', p: null, view: 'home', levels: {}, filter: 'all', codeError: false, codeValue: '', big: false };
+
+  function esc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function V(o) { return o ? (o[lang] || o.en) : ''; }
+  function t(k, vars) {
+    var s = STR[lang][k];
+    if (s === undefined) s = STR.en[k];
+    if (s === undefined) s = k;
+    if (vars) s = s.replace(/\{(\w+)\}/g, function (m, n) { return vars[n] !== undefined ? vars[n] : m; });
+    return esc(s);
+  }
+  function who() { var p = state.p; return { name: esc(V(p.name)), other: p.paired ? esc(V(p.other)) : '', since: p.paired ? esc(V(p.since)) : '', me: esc(V(p.name)) }; }
+
+  var toastTimer;
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.innerHTML = msg; el.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.hidden = true; }, 3600);
+  }
+
+  function langToggle() {
+    return '<div class="lang" role="group" aria-label="Language / 언어">' +
+      '<button type="button" data-action="lang" data-lang="en" aria-pressed="' + (lang === 'en') + '" lang="en">EN</button><span aria-hidden="true">·</span>' +
+      '<button type="button" data-action="lang" data-lang="ko" aria-pressed="' + (lang === 'ko') + '" lang="ko">한국어</button></div>';
+  }
+  function brand() { return '<a class="brand" href="/" aria-label="homming">' + BRAND + '<span class="word">homming</span></a>'; }
+  function banner() { return '<div class="preview"><span class="dot" aria-hidden="true"></span>' + t('banner') + '</div>'; }
+
+  /* ---------------- code entry ---------------- */
+  function codeScreen() {
+    return banner() +
+      '<header class="top">' + brand() + langToggle() + '</header>' +
+      '<main class="entry"><section class="card entrycard">' +
+        '<div class="eyebrow">' + t('code.eyebrow') + '</div>' +
+        '<h1>' + t('code.title') + '</h1>' +
+        '<p class="lede">' + t('code.lede') + '</p>' +
+        '<form class="codeform" data-form="code" novalidate>' +
+          '<label class="label" for="code">' + t('code.label') + '</label>' +
+          '<input id="code" name="code" class="codeinput" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" value="' + esc(state.codeValue) + '" aria-describedby="codehelp' + (state.codeError ? ' codeerr' : '') + '"' + (state.codeError ? ' aria-invalid="true"' : '') + '>' +
+          (state.codeError ? '<p id="codeerr" class="err" role="alert">' + t('code.err') + '</p>' : '') +
+          '<button class="btn primary wide" type="submit">' + t('code.enter') + '</button>' +
+        '</form>' +
+        '<p id="codehelp" class="help">' + t('code.help') + '</p>' +
+        '<div class="demo"><div class="eyebrow">' + t('code.demo') + '</div>' +
+          '<button type="button" data-action="demo" data-code="123456"><b>123456</b>' + t('code.demo.paired') + '</button>' +
+          '<button type="button" data-action="demo" data-code="246810"><b>246810</b>' + t('code.demo.solo') + '</button>' +
+        '</div>' +
+      '</section><p class="fineprint">' + t('code.fine') + '</p></main>';
+  }
+
+  /* ---------------- app shell ---------------- */
+  var VIEWS = [['home', 'home'], ['sharing', 'shield'], ['history', 'story'], ['letter', 'letter'], ['connections', 'link']];
+  function appShell() {
+    var p = state.p, w = who();
+    var nav = VIEWS.map(function (v) {
+      return '<button type="button" data-action="nav" data-view="' + v[0] + '"' + (state.view === v[0] ? ' aria-current="page"' : '') + '>' + icon(v[1]) + '<span>' + t('nav.' + v[0]) + '</span></button>';
+    }).join('');
+    var bottom = VIEWS.map(function (v) {
+      return '<button type="button" data-action="nav" data-view="' + v[0] + '"' + (state.view === v[0] ? ' aria-current="page"' : '') + '>' + icon(v[1]) + '<span>' + t('navs.' + v[0]) + '</span></button>';
+    }).join('');
+    return banner() +
+      '<div class="app">' +
+        '<aside class="side">' + brand() + '<nav class="nav" aria-label="' + t('app.space') + '">' + nav + '</nav>' +
+          '<div class="who"><span class="avatar">' + esc(V(p.initial)) + '</span><div><strong>' + w.name + '</strong><span class="muted small">' + esc(V(p.place)) + '</span></div></div>' +
+        '</aside>' +
+        '<div class="shell">' +
+          '<header class="appbar"><div class="crumb">' + t('app.space') + ' / <strong>' + t('nav.' + state.view) + '</strong></div>' +
+            '<div class="mobile-brand">' + brand() + '</div>' +
+            '<div class="tools"><span class="pill">' + t('top.pill') + '</span>' +
+              '<button type="button" class="btn small quiet" data-action="big" aria-pressed="' + state.big + '">' + (state.big ? t('top.normal') : t('top.big')) + '</button>' +
+              langToggle() +
+              '<button type="button" class="btn small" data-action="exit">' + t('top.exit') + '</button>' +
+            '</div></header>' +
+          '<main class="main" id="main" tabindex="-1">' + view() + '</main>' +
+        '</div>' +
+        '<nav class="bottomnav" aria-label="' + t('app.space') + '">' + bottom + '</nav>' +
+      '</div>';
+  }
+  function view() {
+    return ({ home: home, sharing: sharing, history: history, letter: letter, connections: connections }[state.view] || home)();
+  }
+  function hero(eyebrow, title, lede) {
+    return '<section class="hero"><div class="eyebrow">' + eyebrow + '</div><h1>' + title + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + '</section>';
+  }
+
+  /* ---------------- views ---------------- */
+  function pairCard() {
+    var p = state.p, w = who();
+    var me = '<div class="person"><span class="avatar">' + esc(V(p.initial)) + '</span><strong>' + t('pair.me') + ' · ' + w.name + '</strong><span class="muted small">' + esc(V(p.place)) + '</span></div>';
+    if (p.paired) {
+      return '<section class="card"><div class="pairrow">' + me +
+        '<div class="link"><span class="bar"></span><span class="chip ok">' + t('pair.connected') + '</span></div>' +
+        '<div class="person"><span class="avatar other">' + esc(V(p.otherInitial)) + '</span><strong>' + w.other + '</strong><span class="muted small">' + esc(V(p.otherPlace)) + '</span></div>' +
+        '</div></section>';
+    }
+    return '<section class="card"><div class="pairrow">' + me +
+      '<div class="link dashed"><span class="bar"></span><span class="chip">' + t('pair.waiting') + '</span></div>' +
+      '<div class="person"><span class="avatar ghost">?</span><strong>' + t('pair.empty') + '</strong>' +
+      '<button type="button" class="btn primary small" data-action="invite">' + t('pair.invite') + '</button></div>' +
+      '</div><p class="pairnote muted small">' + t('pair.solo.note') + '</p></section>';
+  }
+  function graphCard() {
+    var p = state.p;
+    var nodes = '<span class="avatar">' + esc(V(p.initial)) + '</span>' +
+      (p.paired ? '<span class="seg-line"></span><span class="avatar other">' + esc(V(p.otherInitial)) + '</span>' : '<span class="seg-line dashed"></span><span class="avatar ghost">?</span>') +
+      '<span class="seg-line dashed"></span><span class="avatar ghost">+</span>';
+    return '<section class="card"><div class="cardhead"><h3>' + t('card.graph') + '</h3><span class="chip soon">' + t('chip.soon') + '</span></div>' +
+      '<p class="small muted">' + t('card.graph.body') + '</p><div class="minigraph" aria-hidden="true">' + nodes + '</div></section>';
+  }
+  function home() {
+    var p = state.p, w = who();
+    if (!p.paired) {
+      return hero(t('home.eyebrow'), t('home.hello', w), t('home.solo')) + pairCard() +
+        '<div class="grid2"><section class="card"><div class="cardhead"><h3>' + t('card.nudge') + '</h3></div><p class="small muted">' + t('card.solo.nudge') + '</p></section>' + graphCard() + '</div>';
+    }
+    return hero(t('home.eyebrow'), t('home.hello', w), t('home.paired', w)) + pairCard() +
+      '<div class="grid2">' +
+        '<section class="card"><div class="cardhead"><h3>' + t('card.nudge') + '</h3><span class="chip">' + esc(V(HISTORY[0].date)) + '</span></div>' +
+          '<p class="quote">' + esc(V(NUDGE)) + '</p>' +
+          '<div class="cardfoot"><span class="chip ok">' + t('card.nudge.reacted') + '</span><button type="button" class="btn small" data-action="nav" data-view="history">' + t('card.nudge.more') + '</button></div></section>' +
+        '<section class="card"><div class="cardhead"><h3>' + t('card.letter') + '</h3><span class="chip soon">' + t('card.letter.when') + '</span></div>' +
+          '<p class="small">' + t('card.letter.body') + '</p>' +
+          '<div class="cardfoot"><span></span><button type="button" class="btn primary small" data-action="nav" data-view="letter">' + t('card.letter.cta') + '</button></div></section>' +
+        '<section class="card"><div class="cardhead"><h3>' + t('card.reconnect') + '</h3><span class="chip warn">' + t('st.expired') + '</span></div>' +
+          '<p class="small">' + t('card.reconnect.body', w) + '</p>' +
+          '<div class="cardfoot"><span></span><button type="button" class="btn small" data-action="nav" data-view="connections">' + t('card.reconnect.cta') + '</button></div></section>' +
+        graphCard() +
+      '</div>';
+  }
+  function emptyCard(text, invite) {
+    return '<section class="card empty"><p>' + text + '</p>' + (invite ? '<button type="button" class="btn primary" data-action="invite">' + t('pair.invite') + '</button>' : '') + '</section>';
+  }
+  function sharing() {
+    var p = state.p, w = who();
+    if (!p.paired) return hero(t('sharing.eyebrow'), t('sharing.title'), '') + emptyCard(t('sharing.solo'), true);
+    var rows = TOPICS.map(function (k) {
+      var lv = state.levels[k] || 'ask';
+      var seg = LEVELS.map(function (l) {
+        return '<button type="button" role="radio" aria-checked="' + (l === lv) + '" data-action="level" data-topic="' + k + '" data-level="' + l + '">' + t('lvl.' + l) + '</button>';
+      }).join('');
+      return '<div class="topic"><div><strong>' + t('topic.' + k) + '</strong><span class="small muted">' + t('lvlh.' + lv) + '</span></div>' +
+        '<div class="seg" role="radiogroup" aria-label="' + t('topic.' + k) + '">' + seg + '</div></div>';
+    }).join('');
+    var health = '<div class="topic"><div><strong>' + t('topic.health') + '</strong><span class="small muted">' + t('health.body', w) + '</span></div>' +
+      '<span class="chip fixed">' + icon('lock').replace('<svg ', '<svg width="14" height="14" ') + t('chip.fixed') + '</span></div>';
+    return hero(t('sharing.eyebrow'), t('sharing.title'), t('sharing.lede', w)) +
+      '<section class="card">' + rows + health + '</section>' +
+      '<div class="note">' + icon('info') + '<span>' + t('sharing.note', w) + '</span></div>';
+  }
+  function history() {
+    var p = state.p, w = who();
+    if (!p.paired) return hero(t('hist.eyebrow'), t('hist.title'), '') + emptyCard(t('hist.solo'), true);
+    var f = state.filter;
+    var filters = ['all', 'out', 'in'].map(function (k) {
+      return '<button type="button" data-action="filter" data-filter="' + k + '" aria-pressed="' + (f === k) + '">' + t('hist.' + k) + '</button>';
+    }).join('');
+    var items = HISTORY.filter(function (h) { return f === 'all' || (f === 'out' ? h.dir === 'out' : h.dir !== 'out'); }).map(function (h) {
+      var lbl = h.dir === 'in' ? t('hist.from', w) : h.dir === 'out' ? t('hist.to', w) : t('hist.hodu');
+      var meta = '<div class="tmeta"><span>' + esc(V(h.date)) + '</span><span aria-hidden="true">·</span><strong>' + lbl + '</strong>' +
+        (h.level ? '<span class="chip lvl-' + h.level + '">' + t('lvl.' + h.level) + '</span>' : '') + '</div>';
+      var body;
+      if (h.dir === 'hodu') body = '<p class="quote">' + esc(V(h.text)) + '</p><div class="cardfoot"><span class="chip ok">' + t('card.nudge.reacted') + '</span></div>';
+      else if (h.dir === 'in' && h.level === 'action') body = '<p class="small muted">' + t('hist.hidden', w) + '</p><p class="quote" style="margin-top:6px">' + esc(V(h.text)) + '</p>';
+      else if (h.dir === 'in') body = '<p class="quote">“' + esc(V(h.text)) + '”</p>';
+      else body = '<div class="kv"><span class="k">' + t('hist.said') + '</span><p class="quote">“' + esc(V(h.said)) + '”</p></div>' +
+        (h.level === 'action' ? '<div class="kv"><span class="k">' + t('hist.went', w) + '</span><p class="quote">' + esc(V(h.sent)) + '</p></div>' : '<p class="small muted" style="margin-top:8px">' + t('hist.asis') + '</p>');
+      return '<article class="card titem ' + h.dir + '">' + meta + body + '</article>';
+    }).join('');
+    return hero(t('hist.eyebrow'), t('hist.title'), t('hist.lede', w)) +
+      '<div class="filters" role="group" aria-label="' + t('hist.eyebrow') + '">' + filters + '</div><div class="timeline">' + items + '</div>';
+  }
+  function letter() {
+    var p = state.p, w = who();
+    if (!p.paired) return hero(t('letter.eyebrow'), t('letter.title'), t('letter.lede')) + emptyCard(t('letter.solo'), true);
+    var paras = LETTER.map(function (x) { return '<p>' + esc(V(x)) + '</p>'; }).join('');
+    return hero(t('letter.eyebrow'), t('letter.title'), t('letter.lede')) +
+      '<div class="lettergrid">' +
+        '<article class="letter"><span class="stamp" aria-hidden="true">homming</span><div class="eyebrow">' + t('letter.kicker') + '</div>' +
+          '<h2>' + t('letter.month') + '</h2><span class="small muted">' + t('letter.who', w) + '</span>' + paras +
+          '<p class="sign">' + t('letter.sign') + '</p></article>' +
+        '<aside class="stack">' +
+          '<section class="card"><h3>' + t('letter.approvals') + '</h3><ul class="approvals">' +
+            '<li><span class="chip warn">…</span>' + t('letter.me') + '</li>' +
+            '<li><span class="chip ok">✓</span>' + t('letter.other', w) + '</li></ul>' +
+            '<div class="btnstack"><button type="button" class="btn primary wide" data-action="preview">' + t('letter.approve') + '</button>' +
+            '<button type="button" class="btn wide" data-action="preview">' + t('letter.pick') + '</button></div></section>' +
+          '<div class="note" style="margin-top:0">' + icon('shield') + '<span>' + t('letter.rule1') + '</span></div>' +
+          '<div class="note" style="margin-top:0">' + icon('info') + '<span>' + t('letter.rule2') + '</span></div>' +
+          '<section class="card"><h3>' + t('letter.past') + '</h3><p class="small muted" style="margin-top:8px">' + t('letter.past.sep') + '</p></section>' +
+        '</aside>' +
+      '</div>';
+  }
+  function connections() {
+    var p = state.p;
+    var svcs = [['kakao', 'K', '#FEE500', '#191919'], ['cal', '31', '#E8F0FE', '#1A57C9'], ['gmail', 'M', '#FDECEA', '#C5221F']];
+    var cards = svcs.map(function (s) {
+      var st = p.conn[s[0]];
+      var chip = st === 'ok' ? 'ok' : st === 'expired' ? 'warn' : '';
+      var cta = st === 'ok' ? '<button type="button" class="btn small" data-action="connect">' + t('cta.manage') + '</button>'
+        : st === 'expired' ? '<button type="button" class="btn primary small" data-action="connect">' + t('cta.reconnect') + '</button>'
+        : '<button type="button" class="btn small" data-action="connect">' + t('cta.connect') + '</button>';
+      return '<section class="card svc"><div class="row"><span class="sicon" style="background:' + s[2] + ';color:' + s[3] + '" aria-hidden="true">' + s[1] + '</span>' +
+        '<span class="chip ' + chip + '">' + t('st.' + st) + '</span></div>' +
+        '<h2>' + t('conn.' + s[0]) + '</h2><p>' + t('conn.' + s[0] + '.desc') + '</p>' + cta + '</section>';
+    }).join('');
+    return hero(t('conn.eyebrow'), t('conn.title'), t('conn.lede')) + '<div class="grid3">' + cards + '</div>';
+  }
+
+  /* ---------------- invite dialog ---------------- */
+  function openInvite() {
+    var dlg = document.getElementById('dlg');
+    dlg.innerHTML = '<form method="dialog" class="dlgbody">' +
+      '<h2 id="dlgTitle">' + t('inv.title') + '</h2><p>' + t('inv.body') + '</p>' +
+      '<fieldset><legend>' + t('inv.who') + '</legend>' +
+        '<label class="radio"><input type="radio" name="rel" value="daughter" checked> ' + t('inv.daughter') + '</label>' +
+        '<label class="radio"><input type="radio" name="rel" value="son"> ' + t('inv.son') + '</label></fieldset>' +
+      '<div><label class="label" for="invlink">' + t('inv.link') + '</label>' +
+        '<div class="linkbox" style="margin-top:8px"><input id="invlink" readonly value="homm.ing/join/••••••"><span class="chip">' + t('inv.example') + '</span></div></div>' +
+      '<p class="small muted">' + t('inv.rules') + '</p>' +
+      '<div class="dlgactions"><button type="button" class="btn kakao" data-action="preview-invite">' + t('inv.kakao') + '</button>' +
+        '<button type="button" class="btn" data-action="preview-invite">' + t('inv.copy') + '</button>' +
+        '<button class="btn quiet" value="close">' + t('inv.close') + '</button></div></form>';
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+
+  /* ---------------- render and events ---------------- */
+  function render(focusMain) {
+    var html = document.documentElement;
+    html.lang = lang;
+    html.classList.toggle('big', state.big);
+    document.title = STR[lang]['doc.title'];
+    document.getElementById('root').innerHTML = state.screen === 'code' ? codeScreen() : appShell();
+    if (focusMain) { var m = document.getElementById('main'); if (m) m.focus({ preventScroll: true }); }
+  }
+  function enter(code) {
+    var p = PERSONAS[code];
+    state.codeValue = code;
+    if (!p) { state.codeError = true; render(); var i = document.getElementById('code'); if (i) i.focus(); return; }
+    state.p = p; state.levels = Object.assign({}, p.levels); state.screen = 'app'; state.view = 'home'; state.filter = 'all';
+    state.codeError = false; state.codeValue = '';
+    render(true); window.scrollTo(0, 0);
+  }
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (f.getAttribute('data-form') === 'code') { e.preventDefault(); enter((f.elements.code.value || '').replace(/\D/g, '').slice(0, 6)); }
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'code') { var v = e.target.value.replace(/\D/g, '').slice(0, 6); if (v !== e.target.value) e.target.value = v; state.codeValue = v; }
+  });
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-action]');
+    if (!el) return;
+    var a = el.getAttribute('data-action');
+    if (a === 'lang') { lang = el.getAttribute('data-lang'); rememberLang(lang); render(); }
+    else if (a === 'demo') { enter(el.getAttribute('data-code')); }
+    else if (a === 'nav') { state.view = el.getAttribute('data-view'); render(true); window.scrollTo(0, 0); }
+    else if (a === 'big') { state.big = !state.big; render(); }
+    else if (a === 'exit') { state.screen = 'code'; state.p = null; render(); toast(t('toast.exit')); }
+    else if (a === 'invite') { openInvite(); }
+    else if (a === 'level') { state.levels[el.getAttribute('data-topic')] = el.getAttribute('data-level'); render(); toast(t('toast.saved')); }
+    else if (a === 'filter') { state.filter = el.getAttribute('data-filter'); render(); }
+    else if (a === 'preview') { toast(t('toast.preview')); }
+    else if (a === 'preview-invite') { toast(t('toast.invite')); }
+    else if (a === 'connect') { toast(t('toast.connect')); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
