@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "kind": "static_site_browser_fixture",
+  "fixture_id": "signup-privacy-v1",
+  "registered_at_utc": "2026-10-15T17:12:57.708455+00:00",
+  "source_before_fix_sha256": "e83b7f4374e4d961a960bbfc639d93123a16c2c76496f3aa3bd101c2180fb0ae",
+  "data_classification": "synthetic_only",
+  "network_policy": "intercept_all_requests; never contact production API; never simulate a success response",
+  "cases": [
+    {
+      "id": "signup-nojs-button",
+      "page": "index.html?lang=en#pilot",
+      "browser": {
+        "javascript_enabled": false
+      },
+      "fault": null,
+      "synthetic_input": {
+        "email": "privacy-probe@example.org",
+        "role": "child",
+        "consent": true
+      },
+      "trigger": "submit_button",
+      "expected": {
+        "form_accepts_input": false,
+        "native_submission_possible": false,
+        "signup_post_count": 0,
+        "forbidden_url_query_keys": [
+          "email",
+          "gmail",
+          "role",
+          "consent"
+        ],
+        "synthetic_email_absent_from_url": true
+      }
+    },
+    {
+      "id": "signup-nojs-enter",
+      "page": "index.html?lang=en#pilot",
+      "browser": {
+        "javascript_enabled": false
+      },
+      "fault": null,
+      "synthetic_input": {
+        "email": "privacy-probe@example.org",
+        "role": "child",
+        "consent": true
+      },
+      "trigger": "email_enter",
+      "expected": {
+        "form_accepts_input": false,
+        "native_submission_possible": false,
+        "signup_post_count": 0,
+        "forbidden_url_query_keys": [
+          "email",
+          "gmail",
+          "role",
+          "consent"
+        ],
+        "synthetic_email_absent_from_url": true
+      }
+    },
+    {
+      "id": "signup-handler-init-failure",
+      "page": "index.html?lang=en#pilot",
+      "browser": {
+        "javascript_enabled": true
+      },
+      "fault": {
+        "kind": "throw_before_signup_listener_installation",
+        "target_inline_script_contains": "/* Pilot invitation request.",
+        "message": "Synthetic signup initialization failure"
+      },
+      "synthetic_input": {
+        "email": "privacy-probe@example.org",
+        "role": "child",
+        "consent": true
+      },
+      "trigger": "submit_button",
+      "expected": {
+        "form_accepts_input": false,
+        "native_submission_possible": false,
+        "signup_post_count": 0,
+        "forbidden_url_query_keys": [
+          "email",
+          "gmail",
+          "role",
+          "consent"
+        ],
+        "synthetic_email_absent_from_url": true
+      }
+    }
+  ]
+}
