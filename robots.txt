@@ -1,0 +1,36 @@
+# homm.ing — 색인 범위
+# 이 레포는 public이고 레포 루트 전체가 homm.ing으로 배포된다.
+# 검색엔진에 보일 것은 랜딩·브랜드·팀·법률 페이지뿐이다.
+# 규칙은 가장 길게 맞는 것이 이긴다. 그래서 전체 차단을 먼저 쓰고 보여 줄 경로만 허용한다.
+
+User-agent: *
+Disallow: /
+
+Allow: /$
+Allow: /index.html
+# vercel.json의 cleanUrls가 켜져 있어 실제 주소에는 .html이 없다. 두 형태를 모두 적는다.
+Allow: /brand
+Allow: /brand.html
+Allow: /team
+Allow: /team.html
+Allow: /team/
+Allow: /privacy
+Allow: /privacy.html
+Allow: /terms
+Allow: /terms.html
+Allow: /legal.css
+Allow: /legal.js
+Allow: /assets/
+Allow: /favicon-32.png
+Allow: /apple-touch-icon.png
+Allow: /icon-512.png
+
+# 아래는 위의 전체 차단에 이미 들어 있다. 의도를 분명히 하려고 다시 적는다.
+# /app은 지금 누구나 열 수 있다(200). 색인만 막는 것이며 접근을 막지는 않는다.
+Disallow: /app
+Disallow: /app.html
+Disallow: /everymilestone-studio/
+Disallow: /scripts/
+Disallow: /docs/
+Disallow: /tests/
+Disallow: /experiments/

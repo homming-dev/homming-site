@@ -1,0 +1,14 @@
+# 배포 범위 2차 방어 (2026-10-22)
+# 1차는 git 푸시 때 도는 허용 목록 검사(homming-harness/hooks/site-deploy-scope.sh)다.
+# 이 파일은 그래도 레포에 남은 것이 homm.ing으로 나가지 않게 배포 단계에서 한 번 더 뺀다.
+# 랜딩 사이트가 아닌 경로만 적는다. 랜딩 파일을 여기에 적으면 사이트가 깨진다.
+
+# 2026-10-21에 의도 없이 공개 배포된 디렉토리
+everymilestone-studio/
+
+# 작업용 worktree (추적되지 않지만 로컬 배포 때 함께 올라갈 수 있다)
+.wt-*/
+
+# 테스트와 실험
+tests/
+experiments/
