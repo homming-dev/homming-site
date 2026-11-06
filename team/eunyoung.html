@@ -423,6 +423,10 @@
   .story .role{padding:0 24px; margin-bottom:4px; font-family:var(--mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-700);}
   .story a{display:block;}
   .story img{display:block; width:100%; height:auto;}
+  /* Each image comes in a Korean and an English version; the language script sets
+     <html lang> and only the matching set is shown. The images are lazy, so the hidden
+     set is never downloaded. */
+  html[lang="ko"] .story a.en, html:not([lang="ko"]) .story a.ko{display:none;}
 </style>
 </head>
 <body>
@@ -462,9 +466,12 @@
 
         <section class="card story" aria-labelledby="eunyoung-story">
           <div class="role" id="eunyoung-story" data-i18n="eunyoung.story">The story so far</div>
-          <a href="/assets/team/eunyoung-story-1.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-1.webp" width="1000" height="1435" alt="일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트." decoding="async"></a>
-          <a href="/assets/team/eunyoung-story-2.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-2.webp" width="1000" height="1374" alt="가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot." loading="lazy" decoding="async"></a>
-          <a href="/assets/team/eunyoung-story-3.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-3.webp" width="1000" height="1436" alt="지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈." loading="lazy" decoding="async"></a>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-1.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-1.webp" width="1000" height="1435" alt="일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-1-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-1-en.webp" width="1000" height="1435" alt="Someone who turns everyday life into projects: a sixth grader who wanted to move people, nights of sharing ideas at ADPOWER in college, a first career planning ads, characters and games, the move to the U.S., and everyday projects from the family education company Hummingtree to pitching with a single proposal." loading="lazy" decoding="async"></a>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-2.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-2.webp" width="1000" height="1374" alt="가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-2-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-2-en.webp" width="1000" height="1374" alt="From family conversations to AI products: a film discussion program for families on Radio Korea, Simple Steps helping immigrant women start fresh, Culture Dots creating learning spaces for teens and families, and Dotdotdot, where she led the planning and launch of AI services." loading="lazy" decoding="async"></a>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-3.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-3.webp" width="1000" height="1436" alt="지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-3-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-3-en.webp" width="1000" height="1436" alt="Now, and the dream ahead: Homming, an AI that helps families understand and care for each other; graduate study in AgeTech at USC; opening civic conversations with the City of Bellevue; and a dream of debuting as a stand-up comic at 80." loading="lazy" decoding="async"></a>
         </section>
       </div>
       <div class="more"><a href="/team" data-i18n="all">Everyone at Homming &rarr;</a></div>

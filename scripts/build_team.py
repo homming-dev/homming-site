@@ -46,17 +46,28 @@ PEOPLE = [
             ],
         },
         "links": [],
-        # Illustrated timeline shown below the intro on her own page only. The three images
-        # continue one red thread, so they are stacked without gaps in this order.
+        # Illustrated timeline shown below the intro on her own page only. The art is lettered,
+        # so each image has a Korean original and an English version (same drawing, text
+        # replaced); the language switch shows one set. The three images continue one red
+        # thread, so they are stacked without gaps in this order.
         "story": {
             "label": {"en": "The story so far", "ko": "지금까지의 이야기"},
             "images": [
-                ("/assets/team/eunyoung-story-1.webp", 1000, 1435,
-                 "일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트."),
-                ("/assets/team/eunyoung-story-2.webp", 1000, 1374,
-                 "가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot."),
-                ("/assets/team/eunyoung-story-3.webp", 1000, 1436,
-                 "지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈."),
+                {"w": 1000, "h": 1435,
+                 "ko": ("/assets/team/eunyoung-story-1.webp",
+                        "일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트."),
+                 "en": ("/assets/team/eunyoung-story-1-en.webp",
+                        "Someone who turns everyday life into projects: a sixth grader who wanted to move people, nights of sharing ideas at ADPOWER in college, a first career planning ads, characters and games, the move to the U.S., and everyday projects from the family education company Hummingtree to pitching with a single proposal.")},
+                {"w": 1000, "h": 1374,
+                 "ko": ("/assets/team/eunyoung-story-2.webp",
+                        "가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot."),
+                 "en": ("/assets/team/eunyoung-story-2-en.webp",
+                        "From family conversations to AI products: a film discussion program for families on Radio Korea, Simple Steps helping immigrant women start fresh, Culture Dots creating learning spaces for teens and families, and Dotdotdot, where she led the planning and launch of AI services.")},
+                {"w": 1000, "h": 1436,
+                 "ko": ("/assets/team/eunyoung-story-3.webp",
+                        "지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈."),
+                 "en": ("/assets/team/eunyoung-story-3-en.webp",
+                        "Now, and the dream ahead: Homming, an AI that helps families understand and care for each other; graduate study in AgeTech at USC; opening civic conversations with the City of Bellevue; and a dream of debuting as a stand-up comic at 80.")},
             ],
         },
     },
@@ -167,6 +178,10 @@ STORY_CSS = """<style>
   .story .role{padding:0 24px; margin-bottom:4px; font-family:var(--mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-700);}
   .story a{display:block;}
   .story img{display:block; width:100%; height:auto;}
+  /* Each image comes in a Korean and an English version; the language script sets
+     <html lang> and only the matching set is shown. The images are lazy, so the hidden
+     set is never downloaded. */
+  html[lang="ko"] .story a.en, html:not([lang="ko"]) .story a.ko{display:none;}
 </style>"""
 
 
@@ -191,19 +206,19 @@ def card(p: dict, lang: str = "en") -> str:
         </article>'''
 
 
-def story(p: dict, lang: str = "en") -> str:
+def story(p: dict) -> str:
     s = p.get("story")
     if not s:
         return ""
     imgs = "\n".join(
-        f'          <a href="{src}" target="_blank" rel="noopener"><img src="{src}" width="{w}" height="{h}" alt="{alt}"'
-        f'{"" if i == 0 else " loading=\"lazy\""} decoding="async"></a>'
-        for i, (src, w, h, alt) in enumerate(s["images"])
+        f'          <a class="{lang}" lang="{lang}" href="{img[lang][0]}" target="_blank" rel="noopener">'
+        f'<img src="{img[lang][0]}" width="{img["w"]}" height="{img["h"]}" alt="{img[lang][1]}" loading="lazy" decoding="async"></a>'
+        for img in s["images"] for lang in ("ko", "en")
     )
     return f'''
 
         <section class="card story" aria-labelledby="{p["slug"]}-story">
-          <div class="role" id="{p["slug"]}-story" data-i18n="{p["slug"]}.story">{s["label"][lang]}</div>
+          <div class="role" id="{p["slug"]}-story" data-i18n="{p["slug"]}.story">{s["label"]["en"]}</div>
 {imgs}
         </section>'''
 
