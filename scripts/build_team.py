@@ -46,6 +46,30 @@ PEOPLE = [
             ],
         },
         "links": [],
+        # Illustrated timeline shown below the intro on her own page only. The art is lettered,
+        # so each image has a Korean original and an English version (same drawing, text
+        # replaced); the language switch shows one set. The three images continue one red
+        # thread, so they are stacked without gaps in this order.
+        "story": {
+            "label": {"en": "The story so far", "ko": "지금까지의 이야기"},
+            "images": [
+                {"w": 1000, "h": 1435,
+                 "ko": ("/assets/team/eunyoung-story-1.webp",
+                        "일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트."),
+                 "en": ("/assets/team/eunyoung-story-1-en.webp",
+                        "I turn everyday life into projects: a sixth-grade wish to make people feel something, ideas until sunrise at ADPOWER in college, a first career building worlds through ads, characters and games, a fresh start in the U.S., then life as the project: Hummingtree, where play became a business, and a one-page pitch carried door to door with a stroller.")},
+                {"w": 1000, "h": 1374,
+                 "ko": ("/assets/team/eunyoung-story-2.webp",
+                        "가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot."),
+                 "en": ("/assets/team/eunyoung-story-2-en.webp",
+                        "How family conversations led me to AI: a Radio Korea show where families talked through movies, Simple Steps helping immigrant women find their people and their footing, Culture Dots where teens and families learn side by side, and Dotdotdot, turning daydreams into AI products from first sketch to launch.")},
+                {"w": 1000, "h": 1436,
+                 "ko": ("/assets/team/eunyoung-story-3.webp",
+                        "지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈."),
+                 "en": ("/assets/team/eunyoung-story-3-en.webp",
+                        "Now, and what's next: Homming, helping families care for each other; a student again at USC, studying how we age and the tech that helps; bringing neighbors to the table with the City of Bellevue; and someday, at 80, a giggling grandma on the stand-up stage.")},
+            ],
+        },
     },
     {
         "slug": "jiwoong",
@@ -146,6 +170,20 @@ EXTRA_CSS = """<style>
   .foot .home{color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300);}
 </style>"""
 
+STORY_CSS = """<style>
+  /* Illustrated story on the same .card surface as the intro. The WebP files carry the
+     paper as transparency (white un-multiplied into alpha), so the card's own translucent
+     background shows through exactly as it does behind the intro text. */
+  .story{padding:28px 0 8px; overflow:hidden;}
+  .story .role{padding:0 24px; margin-bottom:4px; font-family:var(--mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-700);}
+  .story a{display:block;}
+  .story img{display:block; width:100%; height:auto;}
+  /* Each image comes in a Korean and an English version; the language script sets
+     <html lang> and only the matching set is shown. The images are lazy, so the hidden
+     set is never downloaded. */
+  html[lang="ko"] .story a.en, html:not([lang="ko"]) .story a.ko{display:none;}
+</style>"""
+
 
 def js_str(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
@@ -168,6 +206,23 @@ def card(p: dict, lang: str = "en") -> str:
         </article>'''
 
 
+def story(p: dict) -> str:
+    s = p.get("story")
+    if not s:
+        return ""
+    imgs = "\n".join(
+        f'          <a class="{lang}" lang="{lang}" href="{img[lang][0]}" target="_blank" rel="noopener">'
+        f'<img src="{img[lang][0]}" width="{img["w"]}" height="{img["h"]}" alt="{img[lang][1]}" loading="lazy" decoding="async"></a>'
+        for img in s["images"] for lang in ("ko", "en")
+    )
+    return f'''
+
+        <section class="card story" aria-labelledby="{p["slug"]}-story">
+          <div class="role" id="{p["slug"]}-story" data-i18n="{p["slug"]}.story">{s["label"]["en"]}</div>
+{imgs}
+        </section>'''
+
+
 def dictionary(people: list[dict], lang: str, *, titles: bool) -> str:
     rows = []
     base = TEXT[lang]
@@ -179,12 +234,17 @@ def dictionary(people: list[dict], lang: str, *, titles: bool) -> str:
         rows.append(f"      {js_str(s + '.role')}: {js_str(p['role'][lang])}, {js_str(s + '.name')}: {js_str(p['name'][lang])}, {js_str(s + '.alt')}: {js_str(p['alt'][lang])},")
         for i, t in enumerate(p["paras"][lang], 1):
             rows.append(f"      {js_str(f'{s}.p{i}')}: {js_str(t)},")
+        if not titles and p.get("story"):
+            rows.append(f"      {js_str(s + '.story')}: {js_str(p['story']['label'][lang])},")
     return "\n".join(rows).rstrip(",")
 
 
 def page(people: list[dict], *, single: bool, title_en: str, title_ko: str) -> str:
     cards = "\n\n".join(card(p) for p in people)
     grid_class = "grid one" if single else "grid"
+    has_story = single and bool(people[0].get("story"))
+    cards += story(people[0]) if has_story else ""
+    extra_css = EXTRA_CSS + ("\n" + STORY_CSS if has_story else "")
     if single:
         p = people[0]
         head = f'''      <div class="eyebrow"><span class="rule"></span> <span data-i18n="eyebrow">{TEXT["en"]["eyebrow"]}</span></div>'''
@@ -211,7 +271,7 @@ def page(people: list[dict], *, single: bool, title_en: str, title_ko: str) -> s
 <meta name="description" content="{og_desc.replace('"', '&quot;')}">
 {HEAD_LINKS}
 {CSS}
-{EXTRA_CSS}
+{extra_css}
 </head>
 <body>
 

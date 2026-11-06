@@ -360,6 +360,7 @@
   .card input[type=email]{width:100%; height:56px; padding:0 16px; font-size:18px; font-family:var(--sans); border:1.5px solid var(--ink-300); border-radius:14px; background:#fff; color:var(--ink-900);}
   .card input[type=email]:focus{outline:3px solid var(--sun); outline-offset:1px; border-color:var(--ink-700)}
   .card fieldset{border:0; padding:0; margin:22px 0 0}
+  .card #signup-fields{margin:0; min-width:0}
   .card legend{font-weight:600; margin-bottom:10px; padding:0}
   .choices{display:grid; grid-template-columns:1fr 1fr; gap:10px}
   .choice{position:relative}
@@ -414,6 +415,19 @@
   .people .more{margin-top:28px;}
   .foot .home{color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300);}
 </style>
+<style>
+  /* Illustrated story on the same .card surface as the intro. The WebP files carry the
+     paper as transparency (white un-multiplied into alpha), so the card's own translucent
+     background shows through exactly as it does behind the intro text. */
+  .story{padding:28px 0 8px; overflow:hidden;}
+  .story .role{padding:0 24px; margin-bottom:4px; font-family:var(--mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-700);}
+  .story a{display:block;}
+  .story img{display:block; width:100%; height:auto;}
+  /* Each image comes in a Korean and an English version; the language script sets
+     <html lang> and only the matching set is shown. The images are lazy, so the hidden
+     set is never downloaded. */
+  html[lang="ko"] .story a.en, html:not([lang="ko"]) .story a.ko{display:none;}
+</style>
 </head>
 <body>
 
@@ -449,6 +463,16 @@
           <p data-i18n="eunyoung.p1">Leads product strategy, customer discovery and business development. More than twenty years in technology and product: former CPO and Senior Director of Product at an AI company, where she led 0-to-1 AI products and a consumer launch across 23 countries.</p>
           <p data-i18n="eunyoung.p2">Graduate studies in Applied Technology and Aging (M.S. in progress). Bilingual product and community experience across the United States and Korea. She lives in the United States; her parents live in Korea.</p>
         </article>
+
+        <section class="card story" aria-labelledby="eunyoung-story">
+          <div class="role" id="eunyoung-story" data-i18n="eunyoung.story">The story so far</div>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-1.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-1.webp" width="1000" height="1435" alt="일상을 프로젝트로 만드는 사람: 감동을 주고 싶던 초등학생, 대학 시절 ADPOWER에서 밤새 나눈 아이디어, 광고·캐릭터·게임을 기획한 첫 커리어, 미국 이주, 가족교육 회사 Hummingtree와 기획서 한 장으로 시작한 생활 속 프로젝트." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-1-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-1-en.webp" width="1000" height="1435" alt="I turn everyday life into projects: a sixth-grade wish to make people feel something, ideas until sunrise at ADPOWER in college, a first career building worlds through ads, characters and games, a fresh start in the U.S., then life as the project: Hummingtree, where play became a business, and a one-page pitch carried door to door with a stroller." loading="lazy" decoding="async"></a>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-2.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-2.webp" width="1000" height="1374" alt="가족의 대화에서 AI 제품까지: 라디오 코리아의 가족 영화 토론 프로그램, 이민 여성의 새 출발을 도운 Simple Steps, 청소년과 가족을 위한 배움의 장 Culture Dots, AI 서비스를 기획하고 출시한 Dotdotdot." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-2-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-2-en.webp" width="1000" height="1374" alt="How family conversations led me to AI: a Radio Korea show where families talked through movies, Simple Steps helping immigrant women find their people and their footing, Culture Dots where teens and families learn side by side, and Dotdotdot, turning daydreams into AI products from first sketch to launch." loading="lazy" decoding="async"></a>
+          <a class="ko" lang="ko" href="/assets/team/eunyoung-story-3.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-3.webp" width="1000" height="1436" alt="지금 만드는 일, 앞으로의 꿈: 가족이 서로를 이해하고 챙기도록 돕는 AI를 만드는 Homming, USC 대학원에서 에이징테크 공부, City of Bellevue에서 시민의 대화를 여는 일, 그리고 여든에 스탠드업 코미디언으로 데뷔하는 꿈." loading="lazy" decoding="async"></a>
+          <a class="en" lang="en" href="/assets/team/eunyoung-story-3-en.webp" target="_blank" rel="noopener"><img src="/assets/team/eunyoung-story-3-en.webp" width="1000" height="1436" alt="Now, and what's next: Homming, helping families care for each other; a student again at USC, studying how we age and the tech that helps; bringing neighbors to the table with the City of Bellevue; and someday, at 80, a giggling grandma on the stand-up stage." loading="lazy" decoding="async"></a>
+        </section>
       </div>
       <div class="more"><a href="/team" data-i18n="all">Everyone at Homming &rarr;</a></div>
     </main>
@@ -574,7 +598,8 @@
       "private": "© Homming · unlisted page",
       "eunyoung.role": "Founder · CEO", "eunyoung.name": "Eun Young Kwoun", "eunyoung.alt": "권은영",
       "eunyoung.p1": "Leads product strategy, customer discovery and business development. More than twenty years in technology and product: former CPO and Senior Director of Product at an AI company, where she led 0-to-1 AI products and a consumer launch across 23 countries.",
-      "eunyoung.p2": "Graduate studies in Applied Technology and Aging (M.S. in progress). Bilingual product and community experience across the United States and Korea. She lives in the United States; her parents live in Korea."
+      "eunyoung.p2": "Graduate studies in Applied Technology and Aging (M.S. in progress). Bilingual product and community experience across the United States and Korea. She lives in the United States; her parents live in Korea.",
+      "eunyoung.story": "The story so far"
     },
     ko: {
       "status": "조용히 만드는 중 · 2026",
@@ -584,7 +609,8 @@
       "private": "© Homming · 비공개 페이지",
       "eunyoung.role": "창업자 · CEO", "eunyoung.name": "권은영", "eunyoung.alt": "Eun Young Kwoun",
       "eunyoung.p1": "제품 전략과 고객 검증, 사업 개발을 맡고 있습니다. 기술과 제품 분야에서 20년 넘게 일했고, AI 회사에서 CPO와 제품 시니어 디렉터로 새 AI 제품을 처음부터 만들어 23개국에 출시했습니다.",
-      "eunyoung.p2": "지금은 응용기술과 노화(Applied Technology and Aging) 석사 과정을 밟고 있습니다. 미국과 한국 양쪽에서 제품을 만들고 커뮤니티를 꾸려 온 경험이 있고, 미국에 살며 부모님은 한국에 계십니다."
+      "eunyoung.p2": "지금은 응용기술과 노화(Applied Technology and Aging) 석사 과정을 밟고 있습니다. 미국과 한국 양쪽에서 제품을 만들고 커뮤니티를 꾸려 온 경험이 있고, 미국에 살며 부모님은 한국에 계십니다.",
+      "eunyoung.story": "지금까지의 이야기"
     }
   };
   var KEY = "homming_lang";
