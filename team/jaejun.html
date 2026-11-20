@@ -360,6 +360,7 @@
   .card input[type=email]{width:100%; height:56px; padding:0 16px; font-size:18px; font-family:var(--sans); border:1.5px solid var(--ink-300); border-radius:14px; background:#fff; color:var(--ink-900);}
   .card input[type=email]:focus{outline:3px solid var(--sun); outline-offset:1px; border-color:var(--ink-700)}
   .card fieldset{border:0; padding:0; margin:22px 0 0}
+  .card #signup-fields{margin:0; min-width:0}
   .card legend{font-weight:600; margin-bottom:10px; padding:0}
   .choices{display:grid; grid-template-columns:1fr 1fr; gap:10px}
   .choice{position:relative}
@@ -412,6 +413,16 @@
   .person .links a, .people .more a{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300); padding-bottom:2px;}
   .person .links a:hover, .people .more a:hover{color:var(--ink-900); border-color:var(--ink-900);}
   .people .more{margin-top:28px;}
+  .person .tagline{font-family:var(--serif); font-size:clamp(22px, 2.6vw, 28px); line-height:1.35; letter-spacing:-0.01em; color:var(--ink-900);}
+  .person .story{display:flex; flex-direction:column; gap:12px; margin-top:18px; padding-top:22px; border-top:1px solid rgba(26,22,20,0.14);}
+  .person .story h3{font-family:var(--mono); font-weight:500; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-700); margin:0 0 2px;}
+  .person .story ul{list-style:none; margin:4px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
+  .person .story li{font-size:17px; line-height:1.6; color:var(--ink-700);}
+  .person .story li strong{display:block; font-weight:600; color:var(--ink-900);}
+  .person .story img{display:block; width:100%; height:auto; border-radius:14px; background:#fbf7f1;}
+  .person .story .caption{font-size:15px; color:var(--ink-500);}
+  .person .story.last{border-top:0; padding-top:0;}
+  @media (max-width: 520px){ .person .story.wide{margin-left:-14px; margin-right:-14px;} .person .story.wide h3, .person .story.wide .caption{padding:0 14px;} }
   .foot .home{color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300);}
 </style>
 </head>
@@ -424,6 +435,7 @@
   <div class="blob b3"></div>
   <canvas class="grain" id="grain"></canvas>
   <div class="vignette"></div>
+</div>
 
 <div class="content">
 
@@ -603,6 +615,12 @@
     for (var i = 0; i < nodes.length; i++) {
       var k = nodes[i].getAttribute("data-i18n");
       if (d[k] !== undefined) nodes[i].innerHTML = d[k];
+    }
+    var pics = document.querySelectorAll("img[data-src-en]");
+    for (var m = 0; m < pics.length; m++) {
+      var src = pics[m].getAttribute("data-src-" + lang) || pics[m].getAttribute("data-src-en");
+      if (pics[m].getAttribute("src") !== src) pics[m].setAttribute("src", src);
+      pics[m].setAttribute("alt", pics[m].getAttribute("data-alt-" + lang) || pics[m].getAttribute("data-alt-en"));
     }
     var buttons = document.querySelectorAll(".lang button");
     for (var b = 0; b < buttons.length; b++) {
