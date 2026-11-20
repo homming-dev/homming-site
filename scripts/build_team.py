@@ -113,10 +113,6 @@ PEOPLE = [
                         "en": "An illustrated timeline of Eun Young's path, from a sixth-grader who wanted to touch hearts to Homming today.",
                         "ko": "초등학교 6학년 때의 꿈부터 지금의 호밍까지, 권은영이 걸어온 길을 그린 그림.",
                     },
-                    "caption": {
-                        "en": "My dream at eighty is a stand-up comedy debut. Let's fill today with laughter.",
-                        "ko": "여든의 꿈은 스탠드업 코미디언입니다. 오늘 많이 웃자.",
-                    },
                 },
             ],
             "cta": {"href": "/", "label": {"en": "About Homming &rarr;", "ko": "호밍 알아보기 &rarr;"}},
