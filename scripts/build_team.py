@@ -55,6 +55,19 @@ PEOPLE = [
             },
             "sections": [
                 {
+                    "h": {"en": "Turning everyday life into projects", "ko": "일상을 프로젝트로 만드는 사람"},
+                    "image": {"en": "/assets/team/eunyoung-journey-en.webp", "ko": "/assets/team/eunyoung-journey-ko.webp"},
+                    "size": (724, 2172),
+                    "alt": {
+                        "en": "An illustrated timeline of Eun Young's path, from a sixth-grader who wanted to touch hearts to Homming today.",
+                        "ko": "초등학교 6학년 때의 꿈부터 지금의 호밍까지, 권은영이 걸어온 길을 그린 그림.",
+                    },
+                    "caption": {
+                        "en": "My dream at eighty is a stand-up comedy debut. Let's fill today with laughter.",
+                        "ko": "여든의 꿈은 스탠드업 코미디언입니다. 오늘 많이 웃자.",
+                    },
+                },
+                {
                     "h": {"en": "Why I started Homming", "ko": "왜 호밍을 만들었나"},
                     "paras": {
                         "en": [
@@ -103,19 +116,6 @@ PEOPLE = [
                             ("컬처닷츠 설립", "청소년과 가족, 이민자 커뮤니티가 서로의 문화를 배우는 자리를 만들었습니다. 청소년 200여 명이 참여했습니다."),
                             ("지금", "USC 대학원에서 사람의 생애 과정과 에이징테크를 공부하고, 벨뷰시에서 다양한 문화와 세대의 시민을 잇는 일을 합니다."),
                         ],
-                    },
-                },
-                {
-                    "h": {"en": "Turning everyday life into projects", "ko": "일상을 프로젝트로 만드는 사람"},
-                    "image": {"en": "/assets/team/eunyoung-journey-en.webp", "ko": "/assets/team/eunyoung-journey-ko.webp"},
-                    "size": (724, 2172),
-                    "alt": {
-                        "en": "An illustrated timeline of Eun Young's path, from a sixth-grader who wanted to touch hearts to Homming today.",
-                        "ko": "초등학교 6학년 때의 꿈부터 지금의 호밍까지, 권은영이 걸어온 길을 그린 그림.",
-                    },
-                    "caption": {
-                        "en": "My dream at eighty is a stand-up comedy debut. Let's fill today with laughter.",
-                        "ko": "여든의 꿈은 스탠드업 코미디언입니다. 오늘 많이 웃자.",
                     },
                 },
             ],
