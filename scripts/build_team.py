@@ -46,6 +46,79 @@ PEOPLE = [
             ],
         },
         "links": [],
+        "story": {
+            "tagline": {
+                "en": "I build AI that helps families living far apart understand and look after one another.",
+                "ko": "멀리 사는 가족이 서로를 이해하고 챙기도록 돕는 AI를 만듭니다.",
+            },
+            "sections": [
+                {
+                    "h": {"en": "Why I started Homming", "ko": "왜 호밍을 만들었나"},
+                    "paras": {
+                        "en": [
+                            "I live in the United States. My parents live in Korea.",
+                            "When time zones, generations and daily lives drift apart, families miss each other's days even when the love is there.",
+                            "Could technology close that gap? Homming began with that question.",
+                        ],
+                        "ko": [
+                            "저는 미국에 살고, 부모님은 한국에 계십니다.",
+                            "시차가 다르고 세대가 다르고 사는 모습이 달라지면, 가족은 마음이 있어도 서로의 하루를 놓칩니다.",
+                            "기술이 그 사이를 이어 줄 수 있을까. 호밍은 이 질문에서 시작했습니다.",
+                        ],
+                    },
+                },
+                {
+                    "h": {"en": "What Homming is", "ko": "호밍은 어떤 회사인가"},
+                    "paras": {
+                        "en": [
+                            "Homming is an early-stage startup building AI for families.",
+                            "It helps each person with their own day, and with the things a family does together.",
+                            "It is not a tool for getting work done faster. It is built around the relationships families most want to protect.",
+                        ],
+                        "ko": [
+                            "호밍은 가족을 위한 AI를 만드는 초기 스타트업입니다.",
+                            "한 사람 한 사람의 일상을 돕고, 가족이 함께할 일까지 챙깁니다.",
+                            "일을 더 빨리 하게 하는 도구가 아니라, 가족이 가장 지키고 싶어 하는 관계를 중심에 두고 만듭니다.",
+                        ],
+                    },
+                },
+                {
+                    "h": {"en": "Who I am", "ko": "어떤 사람인가"},
+                    "paras": {
+                        "en": ["For more than twenty years I have built products that bring people together."],
+                        "ko": ["20년 넘게 사람과 사람을 잇는 제품을 만들었습니다."],
+                    },
+                    "items": {
+                        "en": [
+                            ("NCsoft", "Designed social online games."),
+                            ("Dotdotdot (Dot3) · CPO", "Led OLOBO, an AI 3D avatar video app, from its first wireframe to launch in 23 countries, and built LoBo, an AI chatbot platform for organizations."),
+                            ("Culturedots · Founder", "Created places where young people, families and immigrant communities learn each other's cultures. More than 200 young people took part."),
+                            ("Now", "Studying the human life course and AgeTech in graduate school at USC, and connecting residents across cultures and generations at the City of Bellevue."),
+                        ],
+                        "ko": [
+                            ("엔씨소프트", "소셜 온라인 게임을 기획했습니다."),
+                            ("닷닷닷(Dot3) CPO", "AI 3D 아바타 영상 앱 OLOBO를 첫 화면 설계부터 23개국 출시까지 이끌었고, 기업용 AI 챗봇 플랫폼 LoBo를 만들었습니다."),
+                            ("컬처닷츠 설립", "청소년과 가족, 이민자 커뮤니티가 서로의 문화를 배우는 자리를 만들었습니다. 청소년 200여 명이 참여했습니다."),
+                            ("지금", "USC 대학원에서 사람의 생애 과정과 에이징테크를 공부하고, 벨뷰시에서 다양한 문화와 세대의 시민을 잇는 일을 합니다."),
+                        ],
+                    },
+                },
+                {
+                    "h": {"en": "Turning everyday life into projects", "ko": "일상을 프로젝트로 만드는 사람"},
+                    "image": {"en": "/assets/team/eunyoung-journey-en.webp", "ko": "/assets/team/eunyoung-journey-ko.webp"},
+                    "size": (724, 2172),
+                    "alt": {
+                        "en": "An illustrated timeline of Eun Young's path, from a sixth-grader who wanted to touch hearts to Homming today.",
+                        "ko": "초등학교 6학년 때의 꿈부터 지금의 호밍까지, 권은영이 걸어온 길을 그린 그림.",
+                    },
+                    "caption": {
+                        "en": "My dream at eighty is a stand-up comedy debut. Let's fill today with laughter.",
+                        "ko": "여든의 꿈은 스탠드업 코미디언입니다. 오늘 많이 웃자.",
+                    },
+                },
+            ],
+            "cta": {"href": "/", "label": {"en": "About Homming &rarr;", "ko": "호밍 알아보기 &rarr;"}},
+        },
     },
     {
         "slug": "jiwoong",
@@ -143,6 +216,16 @@ EXTRA_CSS = """<style>
   .person .links a, .people .more a{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300); padding-bottom:2px;}
   .person .links a:hover, .people .more a:hover{color:var(--ink-900); border-color:var(--ink-900);}
   .people .more{margin-top:28px;}
+  .person .tagline{font-family:var(--serif); font-size:clamp(22px, 2.6vw, 28px); line-height:1.35; letter-spacing:-0.01em; color:var(--ink-900);}
+  .person .story{display:flex; flex-direction:column; gap:12px; margin-top:18px; padding-top:22px; border-top:1px solid rgba(26,22,20,0.14);}
+  .person .story h3{font-family:var(--mono); font-weight:500; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-700); margin:0 0 2px;}
+  .person .story ul{list-style:none; margin:4px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
+  .person .story li{font-size:17px; line-height:1.6; color:var(--ink-700);}
+  .person .story li strong{display:block; font-weight:600; color:var(--ink-900);}
+  .person .story img{display:block; width:100%; height:auto; border-radius:14px; background:#fbf7f1;}
+  .person .story .caption{font-size:15px; color:var(--ink-500);}
+  .person .story.last{border-top:0; padding-top:0;}
+  @media (max-width: 520px){ .person .story.wide{margin-left:-14px; margin-right:-14px;} .person .story.wide h3, .person .story.wide .caption{padding:0 14px;} }
   .foot .home{color:var(--ink-700); text-decoration:none; border-bottom:1px solid var(--ink-300);}
 </style>"""
 
@@ -168,6 +251,67 @@ def card(p: dict, lang: str = "en") -> str:
         </article>'''
 
 
+def story_entries(p: dict, lang: str) -> list[tuple[str, str]]:
+    """The i18n keys and texts of a person's long story (their own page only)."""
+    st, s = p["story"], p["slug"]
+    out = [(f"{s}.tagline", st["tagline"][lang])]
+    for n, sec in enumerate(st["sections"], 1):
+        out.append((f"{s}.s{n}.h", sec["h"][lang]))
+        for i, t in enumerate(sec.get("paras", {}).get(lang, []), 1):
+            out.append((f"{s}.s{n}.p{i}", t))
+        for i, (label, text) in enumerate(sec.get("items", {}).get(lang, []), 1):
+            out.append((f"{s}.s{n}.i{i}", f"<strong>{label}</strong> {text}"))
+        if "caption" in sec:
+            out.append((f"{s}.s{n}.cap", sec["caption"][lang]))
+    out.append((f"{s}.cta", st["cta"]["label"][lang]))
+    return out
+
+
+def story_card(p: dict, lang: str = "en") -> str:
+    """One person's own page: name, one line, then the story in short blocks for a phone."""
+    st, s = p["story"], p["slug"]
+    text = dict(story_entries(p, lang))
+    blocks = []
+    for n, sec in enumerate(st["sections"], 1):
+        rows = [f'            <h3 data-i18n="{s}.s{n}.h">{text[f"{s}.s{n}.h"]}</h3>']
+        for i in range(1, len(sec.get("paras", {}).get(lang, [])) + 1):
+            rows.append(f'            <p data-i18n="{s}.s{n}.p{i}">{text[f"{s}.s{n}.p{i}"]}</p>')
+        count = len(sec.get("items", {}).get(lang, []))
+        if count:
+            lis = "\n".join(f'              <li data-i18n="{s}.s{n}.i{i}">{text[f"{s}.s{n}.i{i}"]}</li>' for i in range(1, count + 1))
+            rows.append(f"            <ul>\n{lis}\n            </ul>")
+        wide = ""
+        if "image" in sec:
+            # The picture differs by language, so the language script sets src; noscript keeps the English one.
+            w, h = sec["size"]
+            img = sec["image"]
+            alt = {k: v.replace('"', "&quot;") for k, v in sec["alt"].items()}
+            rows.append(
+                f'            <img width="{w}" height="{h}" decoding="async" alt="{alt["en"]}" '
+                f'data-src-en="{img["en"]}" data-src-ko="{img["ko"]}" data-alt-en="{alt["en"]}" data-alt-ko="{alt["ko"]}">\n'
+                f'            <noscript><img width="{w}" height="{h}" src="{img["en"]}" alt="{alt["en"]}"></noscript>'
+            )
+            wide = " wide"
+        if "caption" in sec:
+            rows.append(f'            <p class="caption" data-i18n="{s}.s{n}.cap">{text[f"{s}.s{n}.cap"]}</p>')
+        blocks.append(f'          <section class="story{wide}">\n' + "\n".join(rows) + "\n          </section>")
+    body = "\n".join(blocks)
+    links = [f'            <a href="{href}" target="_blank" rel="noopener">{label}</a>' for label, href in p["links"]]
+    links.append(f'            <a href="{st["cta"]["href"]}" data-i18n="{s}.cta">{text[f"{s}.cta"]}</a>')
+    link_rows = "\n".join(links)
+    return f'''        <article class="card person" id="{s}">
+          <div class="role" data-i18n="{s}.role">{p["role"][lang]}</div>
+          <h1 class="name"><span data-i18n="{s}.name">{p["name"][lang]}</span><small data-i18n="{s}.alt">{p["alt"][lang]}</small></h1>
+          <p class="tagline" data-i18n="{s}.tagline">{text[f"{s}.tagline"]}</p>
+{body}
+          <section class="story last">
+          <div class="links">
+{link_rows}
+          </div>
+          </section>
+        </article>'''
+
+
 def dictionary(people: list[dict], lang: str, *, titles: bool) -> str:
     rows = []
     base = TEXT[lang]
@@ -177,13 +321,17 @@ def dictionary(people: list[dict], lang: str, *, titles: bool) -> str:
     for p in people:
         s = p["slug"]
         rows.append(f"      {js_str(s + '.role')}: {js_str(p['role'][lang])}, {js_str(s + '.name')}: {js_str(p['name'][lang])}, {js_str(s + '.alt')}: {js_str(p['alt'][lang])},")
+        if not titles and "story" in p:
+            for k, t in story_entries(p, lang):
+                rows.append(f"      {js_str(k)}: {js_str(t)},")
+            continue
         for i, t in enumerate(p["paras"][lang], 1):
             rows.append(f"      {js_str(f'{s}.p{i}')}: {js_str(t)},")
     return "\n".join(rows).rstrip(",")
 
 
 def page(people: list[dict], *, single: bool, title_en: str, title_ko: str) -> str:
-    cards = "\n\n".join(card(p) for p in people)
+    cards = "\n\n".join(story_card(p) if single and "story" in p else card(p) for p in people)
     grid_class = "grid one" if single else "grid"
     if single:
         p = people[0]
@@ -191,7 +339,7 @@ def page(people: list[dict], *, single: bool, title_en: str, title_ko: str) -> s
         intro = ""
         more = f'''      <div class="more"><a href="/team" data-i18n="all">{TEXT["en"]["all"]}</a></div>'''
         page_title = f"{title_en}"
-        og_desc = p["paras"]["en"][0]
+        og_desc = p["story"]["tagline"]["en"] if "story" in p else p["paras"]["en"][0]
     else:
         head = f'''      <div class="eyebrow"><span class="rule"></span> <span data-i18n="eyebrow">{TEXT["en"]["eyebrow"]}</span></div>
       <h1 class="pp" data-i18n="title">{TEXT["en"]["title"]}</h1>'''
@@ -266,6 +414,12 @@ def page(people: list[dict], *, single: bool, title_en: str, title_ko: str) -> s
     for (var i = 0; i < nodes.length; i++) {{
       var k = nodes[i].getAttribute("data-i18n");
       if (d[k] !== undefined) nodes[i].innerHTML = d[k];
+    }}
+    var pics = document.querySelectorAll("img[data-src-en]");
+    for (var m = 0; m < pics.length; m++) {{
+      var src = pics[m].getAttribute("data-src-" + lang) || pics[m].getAttribute("data-src-en");
+      if (pics[m].getAttribute("src") !== src) pics[m].setAttribute("src", src);
+      pics[m].setAttribute("alt", pics[m].getAttribute("data-alt-" + lang) || pics[m].getAttribute("data-alt-en"));
     }}
     var buttons = document.querySelectorAll(".lang button");
     for (var b = 0; b < buttons.length; b++) {{
