@@ -25,7 +25,9 @@ def slice_between(start: str, end: str, *, keep_end: bool = False) -> str:
 
 HEAD_LINKS = slice_between('<link rel="icon"', "<style>").rstrip()
 CSS = slice_between("<style>", "</style>", keep_end=True)
-STAGE = slice_between('<div class="stage" id="stage">', "</div>\n\n<div class=\"content\">").rstrip()
+# The slice stops before the stage's own closing tag, so close it here: left open, the fixed stage swallows
+# .content and a page longer than the screen cannot scroll.
+STAGE = slice_between('<div class="stage" id="stage">', "</div>\n\n<div class=\"content\">").rstrip() + "\n</div>"
 HEADER = slice_between('    <header class="nav">', "</header>", keep_end=True)
 BG_SCRIPT = slice_between("<script>\n(function(){\n  // Trigger intro animations", "</script>", keep_end=True)
 
